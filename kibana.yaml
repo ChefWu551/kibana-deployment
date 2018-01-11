@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: platform
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+        - name: kibana
+          imagePullPolicy: IfNotPresent
+          image: registry.cn-hangzhou.aliyuncs.com/wuyufeng/kibana
+          
+          command: ["/bin/sh","-c", "usr/share/kibana/bin/kibana"]
+          ports:
+            - containerPort: 5601
+          # volumeMounts:
+          #   - mountPath: /usr/share/elasticsearch/data
+          #     name: data
+          #     subPath: data/elasticsearch
+      volumes:
+        # - name: data  
+        #   persistentVolumeClaim:
+        #     claimName: platform-hostdisk
+
+        - name: tz-config
+          hostPath:
+            path: /etc/localtime
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: platform
+spec:
+  type: NodePort 
+  ports:
+  - port: 5601
+    targetPort: 5601
+    protocol: TCP
+    name: "kibana"
+    nodePort: 30061
+  selector:
+    app: kibana
