@@ -13,7 +13,7 @@ spec:
       containers:
         - name: kibana
           imagePullPolicy: Always
-          image: registry.cn-hangzhou.aliyuncs.com/wuyufeng/kibana
+          image: registry.cn-hangzhou.aliyuncs.com/wuyufeng/kibana:latest
           
           command: ["/bin/sh","-c", "while true; do echo hello world; sleep 5; done"]
           ports:
@@ -23,13 +23,14 @@ spec:
           #     name: data
           #     subPath: data/elasticsearch
       volumes:
+        - name: tz-config
+          hostPath:
+            path: /etc/localtime
+        
         - name: data  
           persistentVolumeClaim:
             claimName: platform-hostdisk
 
-        - name: tz-config
-          hostPath:
-            path: /etc/localtime
 
 ---
 apiVersion: v1
