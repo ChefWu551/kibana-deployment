@@ -9,4 +9,4 @@ ENV PATH /usr/share/kibana:$PATH
 #RUN kibana plugin --install elastic/sense
 #RUN kibana plugin --install elasticsearch/marvel/latest
 EXPOSE 5601
-CMD ["bin/kibana"]
+CMD ["/usr/share/kibana/bin/kibana"]
