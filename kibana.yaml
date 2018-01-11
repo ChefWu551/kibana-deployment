@@ -15,7 +15,7 @@ spec:
           imagePullPolicy: IfNotPresent
           image: registry.cn-hangzhou.aliyuncs.com/wuyufeng/kibana
           
-          command: ["/bin/sh","-c", "usr/share/kibana/bin/kibana"]
+          command: ["/bin/sh","-c", "while true; do echo hello world; sleep 5; done"]
           ports:
             - containerPort: 5601
           # volumeMounts:
@@ -23,9 +23,9 @@ spec:
           #     name: data
           #     subPath: data/elasticsearch
       volumes:
-        # - name: data  
-        #   persistentVolumeClaim:
-        #     claimName: platform-hostdisk
+        - name: data  
+          persistentVolumeClaim:
+            claimName: platform-hostdisk
 
         - name: tz-config
           hostPath:
