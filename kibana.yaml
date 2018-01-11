@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: kibana
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           image: registry.cn-hangzhou.aliyuncs.com/wuyufeng/kibana
           
           command: ["/bin/sh","-c", "while true; do echo hello world; sleep 5; done"]
